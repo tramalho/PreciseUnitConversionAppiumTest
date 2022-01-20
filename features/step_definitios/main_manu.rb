@@ -1,11 +1,19 @@
-When(/^I tap on menu icon, I should see left side menu$/) do
-  puts("step 01")
-end
-
-Given(/^I land on menu screen$/) do
-  puts("step 02")
-end
-
 Then(/^I should see left side menu$/) do
-  puts("step 03")
+
+end
+
+Given(/^I land on Home Screen$/) do
+
+end
+
+When(/^I press on Menu icon$/) do
+
+end
+
+And(/^I press on My conversations Button$/) do
+
+end
+
+Then(/^I land on My conversations Screen$/) do
+
 end
