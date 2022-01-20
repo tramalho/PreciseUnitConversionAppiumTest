@@ -14,6 +14,8 @@ Feature: Tests for Home Screen functionality
     When I press on Clear button
     Then Show all button should be disabled
 
+  @outline
+  @input
   @conversions
   Scenario Outline: Verify default conversion
     Given I land on Home Screen
