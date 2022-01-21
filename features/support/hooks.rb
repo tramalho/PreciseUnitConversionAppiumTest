@@ -1,7 +1,8 @@
 Before do
-  puts "Before hooks is executed"
+  $driver.start_driver
 end
 
 After do
-  puts "After hooks is executed"
+  sleep 3
+  $driver.driver_quit
 end
