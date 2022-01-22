@@ -13,9 +13,10 @@ Then(/^I should see left side menu$/) do
 end
 
 And(/^I press on My conversations Button$/) do
-
+  element = find_element(xpath: "//android.widget.TextView[contains(@text,'My conversions')]")
+  element.click
 end
 
 Then(/^I land on My conversations Screen$/) do
-
+  find_element(xpath: "//android.widget.TextView[contains(@text,'No personal conversion created yet')]")
 end
