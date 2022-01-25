@@ -21,3 +21,17 @@ end
 Then(/^I should se result as "([^"]*)"$/) do |arg|
   puts(arg)
 end
+
+And(/^I press on Add to Favorite icon$/) do
+  element = find_element(id: "action_add_favorites")
+  element.click
+end
+
+When(/^I press on Favorite conversions$/) do
+  element = find_element(xpath: "//android.widget.TextView[contains(@text,'Favorite conversions')]")
+  element.click
+end
+
+Then(/^I verify "([^"]*)" add to Favorite conversions list$/) do |arg|
+  find_element(xpath: "//android.widget.TextView[contains(@text,'#{arg}')]")
+end
