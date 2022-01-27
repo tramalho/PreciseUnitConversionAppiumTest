@@ -30,7 +30,17 @@ Feature: Tests for Home Screen functionality
 
   Scenario: User able to add current conversion to Favorite list
     Given I land on Home Screen
-    And I press on Add to Favorite icon
+    When I press on Add to Favorite icon
     And I press on Menu icon
-    When I press on Favorite conversions
+    And I press on Favorite conversions
     Then I verify "Length" add to Favorite conversions list
+  @wip
+  Scenario: User able to search by existing Conversion type
+    Given I land on Home Screen
+    When I press on Search icon
+    And I type "Temperature" in search field
+    And I press return button on soft keyboard
+    And I see "Temperature" as a current unit converter
+    And Left unit picker value should be "Celsius"
+    Then Right unit picker values should be "Fahrenheit"
+

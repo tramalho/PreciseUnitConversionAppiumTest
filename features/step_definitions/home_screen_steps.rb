@@ -35,3 +35,19 @@ end
 Then(/^I verify "([^"]*)" add to Favorite conversions list$/) do |arg|
   find_element(xpath: "//android.widget.TextView[contains(@text,'#{arg}')]")
 end
+
+When(/^I press on Search icon$/) do
+  wait_and_click("action_search")
+end
+
+And(/^I type "([^"]*)" in search field$/) do |arg|
+  wait_and_send_keys("search_src_text", arg)
+end
+
+And(/^I press return button on soft keyboard$/) do
+  Appium::TouchAction.new.tap(x: 0.99, y: 0.99, count: 1).perform
+end
+
+Then(/^I see "([^"]*)" as a current unit converter$/) do |arg|
+  find_text_by_x_path(arg)
+end

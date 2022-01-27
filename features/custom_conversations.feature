@@ -1,5 +1,5 @@
 Feature: User able to create and manage custom conversations
-  @wip
+
   Scenario: I should be able to open my conversations Screen
     Given I land on Home Screen
     When I press on Menu icon

@@ -35,15 +35,3 @@ end
 Then(/^I verify "([^"]*)" add to Custom conversions list$/) do |arg|
   find_element(xpath: "//android.widget.TextView[contains(@text,'#{arg}')]")
 end
-
-private def wait_and_send_keys(id, value)
-  wait = Selenium::WebDriver::Wait.new(:timeout => 10)
-  wait.until { find_element(id: id).displayed? }
-  find_element(id: id).send_keys(value)
-end
-
-private def wait_and_click(id)
-  wait = Selenium::WebDriver::Wait.new(:timeout => 10)
-  wait.until { find_element(id: id).displayed? }
-  find_element(id: id).click
-end
