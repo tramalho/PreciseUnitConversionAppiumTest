@@ -1,5 +1,9 @@
 When(/^Left unit picker value should be "([^"]*)"$/) do |arg|
-  puts(arg)
+  text_element = wait_and_find_text_by_id("select_unit_spinner").text
+
+  if text_element != arg
+    fail("Expected #{arg} returned: #{text_element}")
+  end
 end
 
 Then(/^Right unit picker values should be "([^"]*)"$/) do |arg|
@@ -49,5 +53,5 @@ And(/^I press return button on soft keyboard$/) do
 end
 
 Then(/^I see "([^"]*)" as a current unit converter$/) do |arg|
-  find_text_by_x_path(arg)
+  wait_and_find_text_by_x_path(arg)
 end
