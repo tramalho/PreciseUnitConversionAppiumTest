@@ -1,13 +1,9 @@
 When(/^Left unit picker value should be "([^"]*)"$/) do |arg|
-  text_element = wait_and_find_text_by_id("select_unit_spinner").text
-
-  if text_element != arg
-    fail("Expected #{arg} returned: #{text_element}")
-  end
+  validate_selected_in_spinner("select_unit_spinner",  arg, 0)
 end
 
 Then(/^Right unit picker values should be "([^"]*)"$/) do |arg|
-  puts(arg)
+  validate_selected_in_spinner("select_unit_spinner", arg, 1)
 end
 
 Then(/^Show all button should be (enabled|disabled)$/) do |arg|

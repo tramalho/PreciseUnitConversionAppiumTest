@@ -21,15 +21,13 @@ Appium::Driver.new(caps, true)
 Appium.promote_appium_methods Object
 
 def wait_and_send_keys(id, value)
-  wait = Selenium::WebDriver::Wait.new(:timeout => 10)
-  wait.until { find_element(id: id).displayed? }
-  find_element(id: id).send_keys(value)
+  element = find_with_wait(id)
+  element.send_keys(value)
 end
 
 def wait_and_click(id)
-  wait = Selenium::WebDriver::Wait.new(:timeout => 10)
-  wait.until { find_element(id: id).displayed? }
-  find_element(id: id).click
+  element = find_with_wait(id)
+  element.click
 end
 
 def wait_and_find_text_by_x_path(text)
@@ -37,8 +35,19 @@ def wait_and_find_text_by_x_path(text)
   wait.until { find_element(xpath: "//android.widget.TextView[contains(@text,'#{text}')]").displayed? }
 end
 
-def wait_and_find_text_by_id(id)
+def validate_selected_in_spinner(id, expected_value, searched_index)
+  text_element = find_with_wait_elements(id)
+
+  if text_element[searched_index].text != expected_value
+    fail("Expected #{expected_value} returned: #{text_element}")
+  end
+end
+
+private def find_with_wait(id)
+  find_with_wait_elements(id)[0]
+end
+
+private def find_with_wait_elements(id)
   wait = Selenium::WebDriver::Wait.new(:timeout => 10)
-  wait.until { find_element(id: id).displayed? }
-  find_element(id: id)
+  wait.until { find_elements(id: id) }
 end
