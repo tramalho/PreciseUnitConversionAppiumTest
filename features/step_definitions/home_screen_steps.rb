@@ -49,5 +49,5 @@ And(/^I press return button on soft keyboard$/) do
 end
 
 Then(/^I see "([^"]*)" as a current unit converter$/) do |arg|
-  wait_and_find_text_by_x_path(arg)
+  wait_and_find_text_by_id_and_x_path("action_bar", arg)
 end
