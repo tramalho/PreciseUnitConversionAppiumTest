@@ -23,10 +23,10 @@ Feature: Tests for Home Screen functionality
     Then I should se result as "<result>"
     Examples:
     |target|result|
-    |1     |12    |
-    |2     |24    |
-    |3     |36    |
-    |9     |106   |
+    |1     |30.48    |
+    |2     |60.96    |
+    |3     |91.44    |
+    |9     |274.32   |
 
   Scenario: User able to add current conversion to Favorite list
     Given I land on Home Screen
@@ -34,7 +34,7 @@ Feature: Tests for Home Screen functionality
     And I press on Menu icon
     And I press on Favorite conversions
     Then I verify "Length" add to Favorite conversions list
-  @wip
+
   Scenario: User able to search by existing Conversion type
     Given I land on Home Screen
     When I press on Search icon

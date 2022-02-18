@@ -30,13 +30,17 @@ def wait_and_click(id)
   element.click
 end
 
+private def newWait
+  Selenium::WebDriver::Wait.new(:timeout => 5)
+end
+
 def wait_and_find_text_by_x_path(text)
-  wait = Selenium::WebDriver::Wait.new(:timeout => 10)
-  wait.until { find_element(xpath: "//android.widget.TextView[contains(@text,'#{text}')]").displayed? }
+  wait = newWait()
+  wait.until { find_element(xpath: "//android.widget.TextView[contains(@text,'#{text}')]") }
 end
 
 def wait_and_find_text_by_id_and_x_path(id, text)
-  wait = Selenium::WebDriver::Wait.new(:timeout => 10)
+  wait = newWait
   id_element = find_with_wait(id)
   wait.until { id_element.find_element(xpath: "//android.widget.TextView[contains(@text,'#{text}')]").displayed? }
 end
@@ -49,11 +53,11 @@ def validate_selected_in_spinner(id, expected_value, searched_index)
   end
 end
 
-private def find_with_wait(id)
+def find_with_wait(id)
   find_with_wait_elements(id)[0]
 end
 
 private def find_with_wait_elements(id)
-  wait = Selenium::WebDriver::Wait.new(:timeout => 10)
+  wait = newWait
   wait.until { find_elements(id: id) }
 end

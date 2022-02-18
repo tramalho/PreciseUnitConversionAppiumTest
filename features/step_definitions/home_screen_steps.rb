@@ -15,11 +15,17 @@ When(/^I press on Clear button$/) do
 end
 
 When(/^I type "([^"]*)" to target text field$/) do |arg|
-  puts(arg)
+  element = find_with_wait("keypad")
+  buttonElement = element.find_element(xpath: "//android.widget.Button[contains(@text,'#{arg}')]")
+  buttonElement.click
 end
 
 Then(/^I should se result as "([^"]*)"$/) do |arg|
-  puts(arg)
+  value = find_with_wait("target_value").text
+
+  if value != arg
+    fail("Expected #{arg} returned: #{value}")
+  end
 end
 
 And(/^I press on Add to Favorite icon$/) do
@@ -28,7 +34,7 @@ And(/^I press on Add to Favorite icon$/) do
 end
 
 When(/^I press on Favorite conversions$/) do
-  element = find_element(xpath: "//android.widget.TextView[contains(@text,'Favorite conversions')]")
+  element = wait_and_find_text_by_x_path("Favorite conversions")
   element.click
 end
 
