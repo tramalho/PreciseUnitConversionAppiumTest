@@ -15,9 +15,16 @@ When(/^I press on Clear button$/) do
 end
 
 When(/^I type "([^"]*)" to target text field$/) do |arg|
-  element = find_with_wait("keypad")
-  buttonElement = element.find_element(xpath: "//android.widget.Button[contains(@text,'#{arg}')]")
+
+digits = arg.split("")
+
+element = find_with_wait("keypad")
+
+digits.each do |num|
+  buttonElement = element.find_element(xpath: "//android.widget.Button[contains(@text,'#{num}')]")
   buttonElement.click
+end
+
 end
 
 Then(/^I should se result as "([^"]*)"$/) do |arg|

@@ -22,11 +22,12 @@ Feature: Tests for Home Screen functionality
     When I type "<target>" to target text field
     Then I should se result as "<result>"
     Examples:
-    |target|result|
+    |target|result   |
     |1     |30.48    |
     |2     |60.96    |
     |3     |91.44    |
     |9     |274.32   |
+    |1011  |30 815.28|
 
   Scenario: User able to add current conversion to Favorite list
     Given I land on Home Screen
