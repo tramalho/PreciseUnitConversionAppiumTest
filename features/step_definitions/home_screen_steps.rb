@@ -1,29 +1,35 @@
 When(/^Left unit picker value should be "([^"]*)"$/) do |arg|
-  validate_selected_in_spinner("select_unit_spinner",  arg, 0)
+  validate_selected_in_spinner("select_unit_spinner", arg, 0)
 end
 
 Then(/^Right unit picker values should be "([^"]*)"$/) do |arg|
   validate_selected_in_spinner("select_unit_spinner", arg, 1)
 end
 
-Then(/^Show all button should be (enabled|disabled)$/) do |arg|
-  puts(arg)
+Then(/^Show all button should be (enabled|disabled)$/) do |state|
+
+  result_boolean = find_with_wait("btn_show_all").enabled?
+
+  expected_boolean = state == "enabled" ? true : false
+
+  fail("Expected #{expected_boolean} returned: #{result_boolean}") if result_boolean != expected_boolean
+
 end
 
 When(/^I press on Clear button$/) do
   puts("Clear")
 end
 
-When(/^I type "([^"]*)" to target text field$/) do |arg|
+When(/^I type "([^"]*)" on application keyboard$/) do |arg|
 
-digits = arg.split("")
+  digits = arg.split("")
 
-element = find_with_wait("keypad")
+  element = find_with_wait("keypad")
 
-digits.each do |num|
-  buttonElement = element.find_element(xpath: "//android.widget.Button[contains(@text,'#{num}')]")
-  buttonElement.click
-end
+  digits.each do |num|
+    buttonElement = element.find_element(xpath: "//android.widget.Button[contains(@text,'#{num}')]")
+    buttonElement.click
+  end
 
 end
 
