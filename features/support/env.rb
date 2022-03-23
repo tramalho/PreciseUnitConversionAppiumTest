@@ -57,6 +57,12 @@ def find_with_wait(id)
   find_with_wait_elements(id)[0]
 end
 
+def perform_with_wait(coord_x, coord_y)
+  wait = newWait()
+  element = wait.until { Appium::TouchAction.new.tap(x: coord_x, y: coord_y, count: 1)  }
+  element.perform
+end
+
 private def find_with_wait_elements(id)
   wait = newWait
   wait.until { find_elements(id: id) }

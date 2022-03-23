@@ -27,8 +27,8 @@ When(/^I type "([^"]*)" on application keyboard$/) do |arg|
   element = find_with_wait("keypad")
 
   digits.each do |num|
-    buttonElement = element.find_element(xpath: "//android.widget.Button[contains(@text,'#{num}')]")
-    buttonElement.click
+    button_element = element.find_element(xpath: "//android.widget.Button[contains(@text,'#{num}')]")
+    button_element.click
   end
 
 end
@@ -52,7 +52,11 @@ When(/^I press on Favorite conversions$/) do
 end
 
 Then(/^I verify "([^"]*)" add to Favorite conversions list$/) do |arg|
-  find_element(xpath: "//android.widget.TextView[contains(@text,'#{arg}')]")
+  text_element = find_with_wait("favorites_item_hint").text
+
+  if text_element != arg
+    fail("Expected #{arg} returned: #{text_element}")
+  end
 end
 
 When(/^I press on Search icon$/) do
@@ -64,7 +68,7 @@ And(/^I type "([^"]*)" in search field$/) do |arg|
 end
 
 And(/^I press return button on soft keyboard$/) do
-  Appium::TouchAction.new.tap(x: 0.99, y: 0.99, count: 1).perform
+  perform_with_wait(0.99, 0.99)
 end
 
 Then(/^I see "([^"]*)" as a current unit converter$/) do |arg|

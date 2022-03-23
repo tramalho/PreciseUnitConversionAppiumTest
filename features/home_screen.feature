@@ -7,7 +7,7 @@ Feature: Tests for Home Screen functionality
     When Left unit picker value should be "Foot"
     Then Right unit picker values should be "Centimeter"
 
-  @default @wip
+  @default
   Scenario: Show all button should be enabled at launch
     Given I land on Home Screen
     Then Show all button should be disabled
@@ -29,6 +29,7 @@ Feature: Tests for Home Screen functionality
     |9     |274.32   |
     |1011  |30 815.28|
 
+  @wip
   Scenario: User able to add current conversion to Favorite list
     Given I land on Home Screen
     When I press on Add to Favorite icon
