@@ -29,7 +29,6 @@ Feature: Tests for Home Screen functionality
     |9     |274.32   |
     |1011  |30 815.28|
 
-  @wip
   Scenario: User able to add current conversion to Favorite list
     Given I land on Home Screen
     When I press on Add to Favorite icon
@@ -46,3 +45,14 @@ Feature: Tests for Home Screen functionality
     And Left unit picker value should be "Celsius"
     Then Right unit picker values should be "Fahrenheit"
 
+  @wip
+  Scenario Outline: User able to select values from datepickers
+    Given I land on Home Screen
+    And I select "<unit_type>" from "left" unit picker
+    When I type "<amount>" on application keyboard
+    Then I should se result as "<result>"
+    Examples:
+      | unit_type | amount   | result  |
+      | Inch      | 1        | 2.54    |
+      | Link      | 1        | 20.1168 |
+      | Cable     | 1        | 18 520  |

@@ -42,7 +42,7 @@ Then(/^I should se result as "([^"]*)"$/) do |arg|
 end
 
 And(/^I press on Add to Favorite icon$/) do
-  element = find_element(id: "action_add_favorites")
+  element = find_with_wait(id: "action_add_favorites")
   element.click
 end
 
@@ -73,4 +73,16 @@ end
 
 Then(/^I see "([^"]*)" as a current unit converter$/) do |arg|
   wait_and_find_text_by_id_and_x_path("action_bar", arg)
+end
+
+Given(/^I select "([^"]*)" from "([^"]*)" unit picker$/) do |value, picker|
+  
+  picker_index = 1
+
+  if picker == "left"
+    picker_index = 0
+  end
+
+  click_drop_down_menu("select_unit_spinner", picker_index, value)
+
 end

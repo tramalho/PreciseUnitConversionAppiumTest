@@ -30,8 +30,8 @@ def wait_and_click(id)
   element.click
 end
 
-private def newWait
-  Selenium::WebDriver::Wait.new(:timeout => 5)
+private def newWait(timeout = 5)
+  Selenium::WebDriver::Wait.new(:timeout => timeout)
 end
 
 def wait_and_find_text_by_x_path(text)
@@ -40,7 +40,7 @@ def wait_and_find_text_by_x_path(text)
 end
 
 def wait_and_find_text_by_id_and_x_path(id, text)
-  wait = newWait
+  wait = newWait()
   id_element = find_with_wait(id)
   wait.until { id_element.find_element(xpath: "//android.widget.TextView[contains(@text,'#{text}')]").displayed? }
 end
@@ -63,7 +63,44 @@ def perform_with_wait(coord_x, coord_y)
   element.perform
 end
 
-private def find_with_wait_elements(id)
-  wait = newWait
+def find_with_wait_elements(id)
+  wait = newWait()
   wait.until { find_elements(id: id) }
+end
+
+def click_drop_down_menu(id, index = 0, value)
+# open drop down menu
+element = find_with_wait_elements(id)[index]
+element.click
+
+# find element and click
+scroll_and_click(value)
+end
+
+def scroll_and_click(value)
+
+  # scroll up
+  3.times do
+    scroll(0.5, 0.2, 0.5, 0.8)
+  end
+  #find element (scroll and find)
+  # until exists { wait_and_find_text_by_x_path(value) } do
+  #   scroll(0.5, 0.8, 0.5, 0.1, duration: 1000)
+  # end
+  # wait_and_find_text_by_x_path(value).click
+
+  wait = newWait(10)
+  element = wait.until {
+    until exists { wait_and_find_text_by_x_path(value)  }
+      scroll(0.5, 0.8, 0.5, 0.1, duration: 1000)
+    end
+    wait_and_find_text_by_x_path(value)
+  }
+  element.click
+end
+
+private def scroll(start_x, start_y, end_x, end_y, duration: 600)
+  Appium::TouchAction.new.swipe(start_x: start_x, start_y: start_y,
+                                end_x: end_x, end_y: end_y,
+                                duration: duration).perform
 end
