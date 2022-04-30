@@ -86,3 +86,8 @@ Given(/^I select "([^"]*)" from "([^"]*)" unit picker$/) do |value, picker|
   click_drop_down_menu("select_unit_spinner", picker_index, value)
 
 end
+
+And(/^I select "([^"]*)" from menu$/) do |value|
+  element = wait_and_find_text_by_x_path(value)
+  element.click
+end

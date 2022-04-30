@@ -45,14 +45,22 @@ Feature: Tests for Home Screen functionality
     And Left unit picker value should be "Celsius"
     Then Right unit picker values should be "Fahrenheit"
 
-  @wip
   Scenario Outline: User able to select values from datepickers
     Given I land on Home Screen
-    And I select "<unit_type>" from "left" unit picker
-    When I type "<amount>" on application keyboard
+    When I select "<unit_type>" from "left" unit picker
+    And I type "<amount>" on application keyboard
     Then I should se result as "<result>"
     Examples:
       | unit_type | amount   | result  |
       | Inch      | 1        | 2.54    |
       | Link      | 1        | 20.1168 |
       | Cable     | 1        | 18 520  |
+
+  @wip
+  Scenario: User able to convert values
+    Given I land on Home Screen
+    When I press on Menu icon
+    And I select "Volume" from menu
+    And I select "Cup" from "right" unit picker
+    And I type "1" on application keyboard
+    Then I should se result as "15.1416"
