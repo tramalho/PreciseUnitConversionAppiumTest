@@ -29,6 +29,7 @@ Feature: Tests for Home Screen functionality
     |9     |274.32   |
     |1011  |30 815.28|
 
+  @error
   Scenario: User able to add current conversion to Favorite list
     Given I land on Home Screen
     When I press on Add to Favorite icon
@@ -36,6 +37,7 @@ Feature: Tests for Home Screen functionality
     And I press on Favorite conversions
     Then I verify "Length" add to Favorite conversions list
 
+  @error
   Scenario: User able to search by existing Conversion type
     Given I land on Home Screen
     When I press on Search icon

@@ -1,6 +1,5 @@
 And(/^I press on Create your first conversion Button$/) do
-  element = find_element(id: "btn_new_custom_conversion")
-  element.click
+  wait_and_click("btn_new_custom_conversion")
 end
 
 And(/^I type "([^"]*)" as custom conversation name$/) do |value|
@@ -24,8 +23,7 @@ And(/^I type "([^"]*)" as unit value$/) do |arg|
 end
 
 And(/^I press submit checkmark on Custom conversations screen$/) do
-  element = find_element(id: "action_confirm_custom_unit")
-  element.click
+  wait_and_click("action_confirm_custom_unit")
 end
 
 And(/^I press on OK button on Custom conversations screen$/) do

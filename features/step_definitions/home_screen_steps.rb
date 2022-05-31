@@ -42,12 +42,11 @@ Then(/^I should se result as "([^"]*)"$/) do |arg|
 end
 
 And(/^I press on Add to Favorite icon$/) do
-  element = find_with_wait(id: "action_add_favorites")
-  element.click
+  wait_and_click("action_add_favorites")
 end
 
 When(/^I press on Favorite conversions$/) do
-  element = wait_and_find_text_by_x_path("Favorite conversions")
+  element = find_with_wait_text_by_x_path("Favorite conversions")
   element.click
 end
 
@@ -64,15 +63,16 @@ When(/^I press on Search icon$/) do
 end
 
 And(/^I type "([^"]*)" in search field$/) do |arg|
-  wait_and_send_keys("search_src_text", arg)
+  wait_and_send_keys("search_src_text", "#{arg}\n")
 end
 
 And(/^I press return button on soft keyboard$/) do
   perform_with_wait(0.99, 0.99)
+  wait_and_click_key_event(EnvUtils::KEYCODE_ENTER)
 end
 
 Then(/^I see "([^"]*)" as a current unit converter$/) do |arg|
-  wait_and_find_text_by_id_and_x_path("action_bar", arg)
+  find_with_wait_text_by_id_and_x_path("action_bar", arg)
 end
 
 Given(/^I select "([^"]*)" from "([^"]*)" unit picker$/) do |value, picker|
@@ -88,6 +88,6 @@ Given(/^I select "([^"]*)" from "([^"]*)" unit picker$/) do |value, picker|
 end
 
 And(/^I select "([^"]*)" from menu$/) do |value|
-  element = wait_and_find_text_by_x_path(value)
+  element = find_with_wait_text_by_x_path(value)
   element.click
 end

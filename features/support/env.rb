@@ -17,6 +17,11 @@ def caps
   }
 end
 
+class EnvUtils
+  DEFAULT_TIMEOUT  = 2
+  KEYCODE_ENTER = 66
+end
+
 Appium::Driver.new(caps, true)
 Appium.promote_appium_methods Object
 
@@ -30,16 +35,24 @@ def wait_and_click(id)
   element.click
 end
 
-private def newWait(timeout = 5)
+def wait_and_click_key_event(keyId)
+  @driver.press_keycode keyId
+end
+
+private def newWait(timeout = EnvUtils::DEFAULT_TIMEOUT)
   Selenium::WebDriver::Wait.new(:timeout => timeout)
 end
 
-def wait_and_find_text_by_x_path(text)
-  wait = newWait()
-  wait.until { find_element(xpath: "//android.widget.TextView[contains(@text,'#{text}')]") }
+def find_with_wait_text_by_x_path(text, t = EnvUtils::DEFAULT_TIMEOUT)
+  wait = newWait(t)
+  wait.until { find_by_text text }
 end
 
-def wait_and_find_text_by_id_and_x_path(id, text)
+def find_by_text(text)
+  find_element(xpath: "//android.widget.TextView[contains(@text,'#{text}')]")
+end
+
+def find_with_wait_text_by_id_and_x_path(id, text)
   wait = newWait()
   id_element = find_with_wait(id)
   wait.until { id_element.find_element(xpath: "//android.widget.TextView[contains(@text,'#{text}')]").displayed? }
@@ -59,7 +72,7 @@ end
 
 def perform_with_wait(coord_x, coord_y)
   wait = newWait()
-  element = wait.until { Appium::TouchAction.new.tap(x: coord_x, y: coord_y, count: 1)  }
+  element = wait.until { Appium::TouchAction.new.tap(x: coord_x, y: coord_y, count: 1) }
   element.perform
 end
 
@@ -69,34 +82,48 @@ def find_with_wait_elements(id)
 end
 
 def click_drop_down_menu(id, index = 0, value)
-# open drop down menu
-element = find_with_wait_elements(id)[index]
-element.click
+  # open drop down menu
+  element = find_with_wait_elements(id)[index]
+  element.click
 
-# find element and click
-scroll_and_click(value)
+  # find element and click
+  scroll_and_click(value)
 end
 
 def scroll_and_click(value)
 
-  # scroll up
-  3.times do
-    scroll(0.5, 0.2, 0.5, 0.8)
-  end
-  #find element (scroll and find)
-  # until exists { wait_and_find_text_by_x_path(value) } do
-  #   scroll(0.5, 0.8, 0.5, 0.1, duration: 1000)
-  # end
-  # wait_and_find_text_by_x_path(value).click
+  # scroll up to initialize picker
+  scroll_to(1, duration: 300)
 
-  wait = newWait(10)
-  element = wait.until {
-    until exists { wait_and_find_text_by_x_path(value)  }
-      scroll(0.5, 0.8, 0.5, 0.1, duration: 1000)
+  # create a lambda with a search block of text
+  lambda_find_by_text = -> { find_with_wait_text_by_x_path(value, 0.5) }
+
+  #scroll down and search for text (with a lambda)
+  scroll_to(2) { exists { lambda_find_by_text.call } }
+
+  if exists { lambda_find_by_text.call }
+    element = lambda_find_by_text.call
+    element.click
+  else
+    fail "Cannot find element with text #{value}"
+  end
+end
+
+private def scroll_to(direction, duration: 1000)
+
+  current_screen = get_source
+  previous_screen = ""
+
+  until (yield if block_given?) || (current_screen == previous_screen)
+
+    if 1 == direction
+      scroll(0.5, 0.2, 0.5, 0.8, duration: duration)
+    else
+      scroll(0.5, 0.8, 0.5, 0.1, duration: duration)
     end
-    wait_and_find_text_by_x_path(value)
-  }
-  element.click
+    previous_screen = current_screen
+    current_screen = get_source
+  end
 end
 
 private def scroll(start_x, start_y, end_x, end_y, duration: 600)
