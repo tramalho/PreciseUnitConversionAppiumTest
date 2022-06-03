@@ -91,3 +91,7 @@ And(/^I select "([^"]*)" from menu$/) do |value|
   element = find_with_wait_text_by_x_path(value)
   element.click
 end
+
+And(/^I press on switch units button$/) do
+  wait_and_click("img_switch")
+end

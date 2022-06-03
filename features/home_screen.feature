@@ -58,7 +58,7 @@ Feature: Tests for Home Screen functionality
       | Link      | 1        | 20.1168 |
       | Cable     | 1        | 18 520  |
 
-  @wip
+
   Scenario: User able to convert values
     Given I land on Home Screen
     When I press on Menu icon
@@ -66,3 +66,12 @@ Feature: Tests for Home Screen functionality
     And I select "Cup" from "right" unit picker
     And I type "1" on application keyboard
     Then I should se result as "15.1416"
+
+  @wip
+  Scenario: User able to switch values
+    Given I land on Home Screen
+    When Left unit picker value should be "Foot"
+    And Right unit picker values should be "Centimeter"
+    And I press on switch units button
+    And Left unit picker value should be "Centimeter"
+    Then Right unit picker values should be "Foot"
