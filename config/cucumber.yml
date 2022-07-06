@@ -1,0 +1,9 @@
+
+<% report_opts = "--format html --out report.html --format pretty" %>
+
+default: <%= report_opts %>
+custom: -t @custom_conversions <%= report_opts %>
+home:   -t @home_screen <%= report_opts %>
+main:   -t @main_menu <%= report_opts %>
+any:    -t @custom_conversions,@home_screen <%= report_opts %>
+strict: -t @conversions -t @home_screen <%= report_opts %>

@@ -1,3 +1,4 @@
+@custom_conversions
 Feature: User able to create and manage custom conversations
 
   Scenario: I should be able to open my conversations Screen
