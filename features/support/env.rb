@@ -20,6 +20,7 @@ end
 class EnvUtils
   DEFAULT_TIMEOUT  = 2
   KEYCODE_ENTER = 66
+  SCREENSHOTS_DIR = "screenshots"
 end
 
 Appium::Driver.new(caps, true)
