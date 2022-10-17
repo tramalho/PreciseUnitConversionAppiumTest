@@ -22,7 +22,7 @@ After do |scenario|
   $driver.driver_quit
 end
 
-AfterConfiguration do
+BeforeAll do
   if File.directory? EnvUtils::SCREENSHOTS_DIR
     FileUtils.rm_r(EnvUtils::SCREENSHOTS_DIR)
   end
