@@ -18,7 +18,7 @@ def caps
 end
 
 class EnvUtils
-  DEFAULT_TIMEOUT  = 2
+  DEFAULT_TIMEOUT  = 1
   KEYCODE_ENTER = 66
   SCREENSHOTS_DIR = "screenshots"
 end
@@ -36,16 +36,16 @@ def wait_and_click(id)
   element.click
 end
 
-def wait_and_click_key_event(keyId)
-  @driver.press_keycode keyId
+def wait_and_click_key_event(key_id)
+  @driver.press_keycode key_id
 end
 
-private def newWait(timeout = EnvUtils::DEFAULT_TIMEOUT)
+private def new_wait(timeout = EnvUtils::DEFAULT_TIMEOUT)
   Selenium::WebDriver::Wait.new(:timeout => timeout)
 end
 
 def find_with_wait_text_by_x_path(text, t = EnvUtils::DEFAULT_TIMEOUT)
-  wait = newWait(t)
+  wait = new_wait(t)
   wait.until { find_by_text text }
 end
 
@@ -54,7 +54,7 @@ def find_by_text(text)
 end
 
 def find_with_wait_text_by_id_and_x_path(id, text)
-  wait = newWait()
+  wait = new_wait()
   id_element = find_with_wait(id)
   wait.until { id_element.find_element(xpath: "//android.widget.TextView[contains(@text,'#{text}')]").displayed? }
 end
@@ -72,13 +72,13 @@ def find_with_wait(id)
 end
 
 def perform_with_wait(coord_x, coord_y)
-  wait = newWait()
+  wait = new_wait()
   element = wait.until { Appium::TouchAction.new.tap(x: coord_x, y: coord_y, count: 1) }
   element.perform
 end
 
 def find_with_wait_elements(id)
-  wait = newWait()
+  wait = new_wait()
   wait.until { find_elements(id: id) }
 end
 
@@ -117,11 +117,18 @@ private def scroll_to(direction, duration: 1000)
 
   until (yield if block_given?) || (current_screen == previous_screen)
 
+    start_x = 0.5
+    start_y = 0.8
+    end_x = 0.5
+    end_y = 0.1
+
     if 1 == direction
-      scroll(0.5, 0.2, 0.5, 0.8, duration: duration)
-    else
-      scroll(0.5, 0.8, 0.5, 0.1, duration: duration)
+      start_y = 0.2
+      end_y = 0.8
     end
+
+    scroll(start_x, start_y, end_x, end_y, duration: duration)
+
     previous_screen = current_screen
     current_screen = get_source
   end

@@ -95,3 +95,26 @@ end
 And(/^I press on switch units button$/) do
   wait_and_click("img_switch")
 end
+
+When(/^I should see text "([^"]*)"$/) do |value|
+  find_with_wait_text_by_x_path(value)
+end
+
+When(/^I verify that (\d+)(?:st|nd|rd|th)? result in history list is "([^"]*)"$/) do |index, text|
+  element = find_with_wait("history_conversion_list")
+  array_of_elements = element.find_elements(id: "history_single_line")
+  indexed_element = array_of_elements[index.to_i - 1]
+  actual_text = indexed_element.find_element(id: "history_item_hint").text
+
+  if actual_text != text
+    fail("expected text is #{text}, actual text is #{actual_text}")
+  end
+end
+
+When(/^I press delete from history at (\d+)(?:st|nd|rd|th)? result$/) do |index|
+  element = find_with_wait("history_conversion_list")
+  array_of_elements = element.find_elements(id: "history_single_line")
+  indexed_element = array_of_elements[index.to_i - 1]
+  actual_element = indexed_element.find_element(id: "deleteIcon")
+  actual_element.click
+end

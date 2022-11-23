@@ -2,6 +2,7 @@
 <% report_opts = "--format html --out report.html --format pretty" %>
 
 default: <%= report_opts %>
+wip: -t @wip <%= report_opts %>
 custom: -t @custom_conversions <%= report_opts %>
 home:   -t @home_screen <%= report_opts %>
 main:   -t @main_menu <%= report_opts %>

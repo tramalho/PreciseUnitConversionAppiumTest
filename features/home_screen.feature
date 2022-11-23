@@ -63,10 +63,25 @@ Feature: Tests for Home Screen functionality
     And I type "1" on application keyboard
     Then I should se result as "15.1416"
 
-  @wip
   Scenario: User able to switch values
     When Left unit picker value should be "Foot"
     And Right unit picker values should be "Centimeter"
     And I press on switch units button
     And Left unit picker value should be "Centimeter"
     Then Right unit picker values should be "Foot"
+@wip
+  Scenario: User able to cleanup conversion history
+    When I press on Menu icon
+    And I select "History" from menu
+    And I see "History" as a current unit converter
+    And I should see text "No history right now"
+    And I press on Menu icon
+    And I select "Length" from menu
+    And I type "1" on application keyboard
+    And I press on Menu icon
+    And I select "History" from menu
+    And I verify that 1st result in history list is "Length"
+    And I press delete from history at 1st result
+    Then I should see text "No history right now"
+
+
